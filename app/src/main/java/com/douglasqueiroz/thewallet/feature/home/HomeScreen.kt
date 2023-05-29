@@ -1,7 +1,9 @@
 package com.douglasqueiroz.thewallet.feature.home
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
@@ -12,12 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.douglasqueiroz.thewallet.R
 import com.douglasqueiroz.thewallet.feature.assets.navigateToAssets
 import com.douglasqueiroz.thewallet.feature.settings.navigateToSettings
+import com.douglasqueiroz.thewallet.ui.theme.TheWalletTheme
 
 @Composable
 fun HomeScreen(
@@ -61,7 +65,8 @@ fun BottomBar(
     navController: NavHostController
 ) {
     BottomNavigation(
-        modifier = modifier
+        modifier = modifier,
+//        backgroundColor = MaterialTheme.colors.background
     ) {
 
         BottomBarItem.values().forEach { bottomBarItem ->
@@ -79,8 +84,12 @@ fun BottomBar(
     }
 }
 
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES, device = Devices.NEXUS_5)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    TheWalletTheme {
+        Surface {
+            HomeScreen()
+        }
+    }
 }
