@@ -1,13 +1,16 @@
 package com.douglasqueiroz.thewallet.feature.settings
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import com.douglasqueiroz.thewallet.ui.navigation.NavRouter
+import org.koin.androidx.compose.koinViewModel
 
-fun NavController.navigateToSettings() {
-    val startDestination = this.graph.findStartDestination()
-    this.navigate("settings") {
+fun NavRouter.navigateToSettings() {
+    val startDestination = this.navHostController.graph.findStartDestination()
+
+    this.navHostController.navigate("settings") {
         popUpTo(startDestination.id) {
             saveState = true
         }
@@ -16,8 +19,13 @@ fun NavController.navigateToSettings() {
     }
 }
 
-fun NavGraphBuilder.settingsScreen() {
+fun NavGraphBuilder.settingsScreen(navController: NavHostController) {
     composable("settings") {
-        SettingsScreen()
+
+        val viewModel = koinViewModel<SettingsViewModel>()
+
+        SettingsScreen(
+            onEvent = viewModel::onEvent
+        )
     }
 }

@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.douglasqueiroz.thewallet.feature.assets.assetsScreen
+import com.douglasqueiroz.thewallet.feature.currencylist.currencyListScreen
+import com.douglasqueiroz.thewallet.feature.currencylist.navigateToCurrencyList
 import com.douglasqueiroz.thewallet.feature.home.homeScreen
 import com.douglasqueiroz.thewallet.feature.settings.settingsScreen
 
@@ -26,7 +28,10 @@ fun TheWalletNavHost(
 
         assetsScreen()
 
-        settingsScreen()
+        settingsScreen(navController = navController)
+
+        currencyListScreen()
     }
 
 }
+

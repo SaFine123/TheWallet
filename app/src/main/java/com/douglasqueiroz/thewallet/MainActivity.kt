@@ -11,11 +11,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.douglasqueiroz.thewallet.feature.home.BottomBar
+import com.douglasqueiroz.thewallet.ui.navigation.NavRouter
 import com.douglasqueiroz.thewallet.ui.navigation.TheWalletNavHost
 import com.douglasqueiroz.thewallet.ui.theme.TheWalletTheme
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
 
+    private val navRouter: NavRouter by inject()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             
             val navController = rememberNavController()
+            navRouter.navHostController = navController
 
             TheWalletTheme {
                 Scaffold(

@@ -63,6 +63,13 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material:1.4.3")
 
+//    Koin
+    val koinJetpackCompose = "3.4.1"
+    val koinAndroidVersion= "3.3.2"
+    implementation("io.insert-koin:koin-android:$koinAndroidVersion")
+    implementation("io.insert-koin:koin-android-compat:$koinAndroidVersion")
+    implementation("io.insert-koin:koin-androidx-compose:$koinJetpackCompose")
+
 //    Navigation
     val nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")

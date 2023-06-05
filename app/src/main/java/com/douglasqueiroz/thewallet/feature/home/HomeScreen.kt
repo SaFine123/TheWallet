@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.douglasqueiroz.thewallet.R
 import com.douglasqueiroz.thewallet.feature.assets.navigateToAssets
 import com.douglasqueiroz.thewallet.feature.settings.navigateToSettings
