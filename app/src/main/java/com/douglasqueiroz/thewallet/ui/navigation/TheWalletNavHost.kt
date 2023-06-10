@@ -1,34 +1,33 @@
 package com.douglasqueiroz.thewallet.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.douglasqueiroz.thewallet.di.UtilModule
 import com.douglasqueiroz.thewallet.feature.assets.assetsScreen
 import com.douglasqueiroz.thewallet.feature.currencylist.currencyListScreen
-import com.douglasqueiroz.thewallet.feature.currencylist.navigateToCurrencyList
 import com.douglasqueiroz.thewallet.feature.home.homeScreen
 import com.douglasqueiroz.thewallet.feature.settings.settingsScreen
 
 @Composable
-fun TheWalletNavHost(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
-    startDestination: String = "home"
-) {
+fun TheWalletNavHost() {
+
+    val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = startDestination,
-        modifier = modifier
+        startDestination = "home"
     ) {
+
+        UtilModule.getNavController = {
+            navController
+        }
 
         homeScreen()
 
         assetsScreen()
 
-        settingsScreen(navController = navController)
+        settingsScreen()
 
         currencyListScreen()
     }

@@ -19,13 +19,14 @@ fun NavRouter.navigateToSettings() {
     }
 }
 
-fun NavGraphBuilder.settingsScreen(navController: NavHostController) {
+fun NavGraphBuilder.settingsScreen() {
     composable("settings") {
 
         val viewModel = koinViewModel<SettingsViewModel>()
 
         SettingsScreen(
-            onEvent = viewModel::onEvent
+            onEvent = viewModel::onEvent,
+            onBottomBarClick = viewModel::onBottomBarClick
         )
     }
 }

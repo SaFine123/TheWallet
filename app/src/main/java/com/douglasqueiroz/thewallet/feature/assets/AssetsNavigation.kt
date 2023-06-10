@@ -5,10 +5,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.douglasqueiroz.thewallet.feature.home.navigateToHome
+import com.douglasqueiroz.thewallet.ui.navigation.NavRouter
+import org.koin.androidx.compose.koinViewModel
 
-fun NavHostController.navigateToAssets() {
-    val startDestination = this.graph.findStartDestination()
-    this.navigate("assets") {
+fun NavRouter.navigateToAssets() {
+    val startDestination = this.navHostController.graph.findStartDestination()
+    this.navHostController.navigate("assets") {
         // Pop up to the start destination of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items
@@ -25,6 +27,9 @@ fun NavHostController.navigateToAssets() {
 
 fun NavGraphBuilder.assetsScreen() {
     composable("assets") {
-        AssetsScreen()
+        val viewModel = koinViewModel<AssetsViewModel>()
+        AssetsScreen(
+            onBottomBarClick = viewModel::onBottomBarClick
+        )
     }
 }
