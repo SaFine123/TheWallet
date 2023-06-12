@@ -25,7 +25,7 @@ object ViewModelModule {
         }
 
         viewModel {
-            CurrencyListViewModel(get())
+            CurrencyListViewModel(get(), get())
         }
     }
 }

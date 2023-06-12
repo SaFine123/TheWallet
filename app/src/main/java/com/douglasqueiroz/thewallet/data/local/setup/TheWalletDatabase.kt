@@ -7,7 +7,8 @@ import com.douglasqueiroz.thewallet.data.local.model.Currency
 
 @Database(
     entities = [Currency::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class TheWalletDatabase: RoomDatabase() {
 

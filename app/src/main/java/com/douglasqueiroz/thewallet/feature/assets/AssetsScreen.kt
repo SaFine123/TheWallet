@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.douglasqueiroz.thewallet.ui.components.BottomBar
+import com.douglasqueiroz.thewallet.ui.components.TheWalletBottomBar
 import com.douglasqueiroz.thewallet.ui.components.BottomBarItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,7 +18,7 @@ fun AssetsScreen(
 ) {
     Scaffold(
         bottomBar = {
-            BottomBar(onBottomBarClick = onBottomBarClick)
+            TheWalletBottomBar(onBottomBarClick = onBottomBarClick)
         }
     ) {
         Text(

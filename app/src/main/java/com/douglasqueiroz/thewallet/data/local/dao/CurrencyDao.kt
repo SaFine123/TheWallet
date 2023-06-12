@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface CurrencyDao {
 
     @Upsert
-    fun upset(currency: Currency)
+    suspend fun upset(currency: Currency)
 
     @Delete
     fun delete(currency: Currency)

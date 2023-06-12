@@ -11,7 +11,8 @@ object TheWalletModule {
         modules(
             listOf(
                 UtilModule.get(),
-                ViewModelModule.get()
+                ViewModelModule.get(),
+                DataModule.get(application)
             )
         )
     }

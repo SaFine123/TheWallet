@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.douglasqueiroz.thewallet.R
-import com.douglasqueiroz.thewallet.ui.components.BottomBar
+import com.douglasqueiroz.thewallet.ui.components.TheWalletBottomBar
 import com.douglasqueiroz.thewallet.ui.components.BottomBarItem
 import com.douglasqueiroz.thewallet.ui.components.TheWalletTopBar
 import com.douglasqueiroz.thewallet.ui.theme.TheWalletTheme
@@ -36,7 +36,7 @@ fun SettingsScreen(
             )
         },
         bottomBar = {
-            BottomBar(onBottomBarClick = onBottomBarClick)
+            TheWalletBottomBar(onBottomBarClick = onBottomBarClick)
         }
     ) {
         Column(modifier = modifier.padding(it)) {

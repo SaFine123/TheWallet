@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.douglasqueiroz.thewallet.R
 import com.douglasqueiroz.thewallet.feature.currencylist.state.CurrencyItemState
 import com.douglasqueiroz.thewallet.feature.currencylist.state.CurrencyListViewState
-import com.douglasqueiroz.thewallet.ui.components.BottomBar
+import com.douglasqueiroz.thewallet.ui.components.TheWalletBottomBar
 import com.douglasqueiroz.thewallet.ui.components.BottomBarItem
 import com.douglasqueiroz.thewallet.ui.components.TheWalletTopBar
 import com.douglasqueiroz.thewallet.ui.theme.TheWalletTheme
@@ -23,7 +23,8 @@ import com.douglasqueiroz.thewallet.ui.theme.TheWalletTheme
 fun CurrencyListScreen(
     state: CurrencyListViewState,
     onBottomBarClick: (BottomBarItem) -> Unit = {  },
-    onNavigateUp: () -> Unit = {  }
+    onNavigateUp: () -> Unit = {  },
+    addCurrency: () -> Unit = {}
 ) {
     TheWalletTheme {
         Scaffold(
@@ -34,10 +35,10 @@ fun CurrencyListScreen(
                 )
             },
             bottomBar = {
-                BottomBar(onBottomBarClick = onBottomBarClick)
+                TheWalletBottomBar(onBottomBarClick = onBottomBarClick)
             },
             floatingActionButton = {
-                FloatingActionButton(onClick = { /*TODO*/ }) {
+                FloatingActionButton(onClick = { addCurrency() }) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Add Currency"
