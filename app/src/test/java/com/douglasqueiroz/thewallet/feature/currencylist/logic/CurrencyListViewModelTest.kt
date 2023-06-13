@@ -53,9 +53,9 @@ class CurrencyListViewModelTest {
 
         every {
             currencyDao.getAll()
-        }.returns(flow)
+        }.returns(flowOf(listOf(currency)))
 
-        flow.emit(listOf(currency))
+        target.loadCurrencies()
 
         val result = target.state.currencyList
 
