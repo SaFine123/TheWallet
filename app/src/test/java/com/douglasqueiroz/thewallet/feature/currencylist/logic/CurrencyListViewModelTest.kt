@@ -59,7 +59,6 @@ class CurrencyListViewModelTest {
 
         val result = target.state.currencyList
 
-
         assertEquals(1, result.size)
     }
 
