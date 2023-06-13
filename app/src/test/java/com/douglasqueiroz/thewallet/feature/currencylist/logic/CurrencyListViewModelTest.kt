@@ -9,11 +9,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -23,8 +20,6 @@ class CurrencyListViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val dispatcher = TestCoroutineDispatcher()
-
-    private val flow = MutableSharedFlow<List<Currency>>()
 
     @MockK
     private lateinit var navRouter: NavRouter
@@ -48,7 +43,7 @@ class CurrencyListViewModelTest {
     }
 
     @Test
-    fun `init() - when Dao emits one currency then show the currency`() = runTest {
+    fun `init() - when Dao emits one currency then show the currency`() {
         val currency = mockk<Currency>(relaxed = true)
 
         every {
