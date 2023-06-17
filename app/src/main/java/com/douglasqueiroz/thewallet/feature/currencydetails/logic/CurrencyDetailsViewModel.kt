@@ -33,9 +33,9 @@ class CurrencyDetailsViewModel(
     fun onEvent(event: CurrencyDetailsEvent) {
         when(event) {
             is CurrencyDetailsEvent.OnNameChange -> onChangeCurrencyName(event.newValue)
+            is CurrencyDetailsEvent.OnSymbolChange -> onChangeCurrencySymbol(event.newValue)
             is CurrencyDetailsEvent.OnCancel -> TODO()
             is CurrencyDetailsEvent.OnSave -> TODO()
-            is CurrencyDetailsEvent.OnSymbolChange -> TODO()
         }
     }
 
@@ -50,6 +50,20 @@ class CurrencyDetailsViewModel(
         _state.value = _state.value.copy(
             currencyName = name,
             currencyNameErrorMsg = errorMessage
+        )
+    }
+
+    private fun onChangeCurrencySymbol(symbol: String) {
+
+        val errorMessage = if (symbol.isEmpty()) {
+            stringResUtil.getString(R.string.mandatory_field_error)
+        } else {
+            null
+        }
+
+        _state.value = _state.value.copy(
+            currencySymbol = symbol,
+            currencySymbolErrorMsg = errorMessage
         )
     }
 

@@ -120,4 +120,37 @@ class CurrencyDetailsViewModelTest {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `onEvent(OnSymbolChange) - when Symbol is ABC then show symbol ABC`() = runBlocking {
+        val symbol = "ABC"
+
+        target.onEvent(
+            CurrencyDetailsEvent.OnSymbolChange(newValue = symbol)
+        )
+
+        target.state.test {
+            assertEquals(symbol, expectMostRecentItem().currencySymbol)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onEvent(OnNameSymbol) - when symbol is empty then show an error msg on the symbol field`() = runBlocking {
+        val symbol = ""
+        val errorMessage = "Error message"
+
+        every {
+            stringResUtil.getString(R.string.mandatory_field_error)
+        }returns errorMessage
+
+        target.onEvent(
+            CurrencyDetailsEvent.OnSymbolChange(newValue = symbol)
+        )
+
+        target.state.test {
+            assertEquals(errorMessage, expectMostRecentItem().currencySymbolErrorMsg)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
 }
