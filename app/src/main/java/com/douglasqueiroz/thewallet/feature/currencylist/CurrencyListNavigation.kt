@@ -1,5 +1,7 @@
 package com.douglasqueiroz.thewallet.feature.currencylist
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyListViewModel
@@ -13,8 +15,9 @@ fun NavRouter.navigateToCurrencyList() {
 fun NavGraphBuilder.currencyListScreen() {
     composable("CurrencyList") {
         val viewModel = koinViewModel<CurrencyListViewModel>()
+        val state by viewModel.stateFlow.collectAsState()
         CurrencyListScreen(
-            state = viewModel.state,
+            state = state,
             onNavigateUp = viewModel::navigateUp,
             onBottomBarClick = viewModel::onBottomBarClick,
             addCurrency = viewModel::insert

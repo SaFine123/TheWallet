@@ -14,6 +14,11 @@ import com.douglasqueiroz.thewallet.ui.components.OnBottomBarClickImpl
 import com.douglasqueiroz.thewallet.ui.components.OnTopBarClick
 import com.douglasqueiroz.thewallet.ui.components.OnTopBarClickImp
 import com.douglasqueiroz.thewallet.ui.navigation.NavRouter
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class CurrencyListViewModel(
@@ -26,6 +31,9 @@ class CurrencyListViewModel(
 
     var state by mutableStateOf(CurrencyListViewState())
     private set
+
+    private val _stateFlow = MutableStateFlow(CurrencyListViewState())
+    val stateFlow = _stateFlow.asStateFlow()
 
     init {
         loadCurrencies()
@@ -42,7 +50,7 @@ class CurrencyListViewModel(
     }
 
     fun loadCurrencies() = viewModelScope.launch {
-        currencyDao.getAll().collect { currencyList ->
+        currencyDao.getAll().map { currencyList ->
             val currencyItems = currencyList.map {
                 CurrencyItemState(
                     currencyName = it.name,
@@ -50,8 +58,8 @@ class CurrencyListViewModel(
                 )
             }
 
-            state = state.copy(currencyList = currencyItems)
-        }
+            _stateFlow.value = _stateFlow.value.copy(currencyList = currencyItems)
+        }.stateIn(this)
     }
 
 
