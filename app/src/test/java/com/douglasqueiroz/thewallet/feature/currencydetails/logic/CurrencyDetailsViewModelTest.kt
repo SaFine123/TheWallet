@@ -1,15 +1,15 @@
 package com.douglasqueiroz.thewallet.feature.currencydetails.logic
 
-import androidx.room.util.EMPTY_STRING_ARRAY
 import app.cash.turbine.test
+import com.douglasqueiroz.thewallet.R
 import com.douglasqueiroz.thewallet.data.local.model.Currency
 import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyDetailsEvent
 import com.douglasqueiroz.thewallet.util.StringResUtil
 import io.mockk.MockKAnnotations
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.*
-
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -98,6 +98,25 @@ class CurrencyDetailsViewModelTest {
 
         target.state.test {
             assertEquals(name, expectMostRecentItem().currencyName)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onEvent(OnNameChange) - when name is empty then show an error msg on the name field`() = runBlocking {
+        val name = ""
+        val errorMessage = "Error message"
+
+        every {
+            stringResUtil.getString(R.string.mandatory_field_error)
+        }returns errorMessage
+
+        target.onEvent(
+            CurrencyDetailsEvent.OnNameChange(newValue = name)
+        )
+
+        target.state.test {
+            assertEquals(errorMessage, expectMostRecentItem().currencyNameErrorMsg)
             cancelAndIgnoreRemainingEvents()
         }
     }
