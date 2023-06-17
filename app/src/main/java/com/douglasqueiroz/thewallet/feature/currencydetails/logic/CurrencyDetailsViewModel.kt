@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class CurrencyDetailsViewModel(
     private val currency: Currency? = null,
-    private val stringResUtil: StringResUtil
+    private val stringResUtil: StringResUtil,
+    private val onShowDialog: (Boolean) -> Unit
 ): ViewModel() {
 
     private val _state = MutableStateFlow(CurrencyDetailsViewState())
@@ -34,7 +35,7 @@ class CurrencyDetailsViewModel(
         when(event) {
             is CurrencyDetailsEvent.OnNameChange -> onChangeCurrencyName(event.newValue)
             is CurrencyDetailsEvent.OnSymbolChange -> onChangeCurrencySymbol(event.newValue)
-            is CurrencyDetailsEvent.OnCancel -> TODO()
+            is CurrencyDetailsEvent.OnCancel -> onCancel()
             is CurrencyDetailsEvent.OnSave -> TODO()
         }
     }
@@ -67,4 +68,7 @@ class CurrencyDetailsViewModel(
         )
     }
 
+    private fun onCancel() {
+        onShowDialog(false)
+    }
 }

@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test
 
 class CurrencyDetailsViewModelTest {
 
+    private var showDialog: Boolean = true
+
     @MockK(relaxed = true)
     private lateinit var stringResUtil: StringResUtil
 
@@ -28,7 +30,8 @@ class CurrencyDetailsViewModelTest {
 
     private fun initTarget(currency: Currency? = null) = CurrencyDetailsViewModel(
         stringResUtil = stringResUtil,
-        currency = currency
+        currency = currency,
+        onShowDialog = { showDialog = it }
     )
 
     @Test
@@ -152,5 +155,13 @@ class CurrencyDetailsViewModelTest {
             assertEquals(errorMessage, expectMostRecentItem().currencySymbolErrorMsg)
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun `onEvent(OnCancel) - when onCancel then close the dialog`() {
+
+        target.onEvent(CurrencyDetailsEvent.OnCancel)
+
+        assertFalse(showDialog)
     }
 }
