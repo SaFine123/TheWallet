@@ -2,6 +2,7 @@ package com.douglasqueiroz.thewallet.feature.currencydetails.logic
 
 import app.cash.turbine.test
 import com.douglasqueiroz.thewallet.R
+import com.douglasqueiroz.thewallet.data.local.dao.CurrencyDao
 import com.douglasqueiroz.thewallet.data.local.model.Currency
 import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyDetailsEvent
 import com.douglasqueiroz.thewallet.util.StringResUtil
@@ -20,6 +21,9 @@ class CurrencyDetailsViewModelTest {
     @MockK(relaxed = true)
     private lateinit var stringResUtil: StringResUtil
 
+    @MockK
+    private lateinit var currencyDao: CurrencyDao
+
     private lateinit var target: CurrencyDetailsViewModel
 
     @BeforeEach
@@ -31,7 +35,8 @@ class CurrencyDetailsViewModelTest {
     private fun initTarget(currency: Currency? = null) = CurrencyDetailsViewModel(
         stringResUtil = stringResUtil,
         currency = currency,
-        onShowDialog = { showDialog = it }
+        onShowDialog = { showDialog = it },
+        currencyDao = currencyDao
     )
 
     @Test
@@ -181,6 +186,43 @@ class CurrencyDetailsViewModelTest {
             assertEquals(defaultCurrency, expectMostRecentItem().defaultCurrency)
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun `onEvent(OnNameChange) - when name isn't empty and symbol isn't empty then enable save button`() = runBlocking {
+
+        target.onEvent(CurrencyDetailsEvent.OnNameChange("Not empty string"))
+        target.onEvent(CurrencyDetailsEvent.OnSymbolChange("Not empty string"))
+
+        target.state.test {
+            assertTrue(expectMostRecentItem().enableSave)
+            cancelAndIgnoreRemainingEvents()
+        }
+
+    }
+
+    @Test
+    fun `onEvent(OnNameChange) - when name isn't empty and symbol is empty then enable save button`() = runBlocking {
+
+        target.onEvent(CurrencyDetailsEvent.OnNameChange("Not an empty String"))
+
+        target.state.test {
+            assertFalse(expectMostRecentItem().enableSave)
+            cancelAndIgnoreRemainingEvents()
+        }
+
+    }
+
+    @Test
+    fun `onEvent(OnSymbolChange) - when symbol isn't empty and name is empty then enable save button`() = runBlocking {
+
+        target.onEvent(CurrencyDetailsEvent.OnSymbolChange("Not an empty String"))
+
+        target.state.test {
+            assertFalse(expectMostRecentItem().enableSave)
+            cancelAndIgnoreRemainingEvents()
+        }
+
     }
 
     @Test
