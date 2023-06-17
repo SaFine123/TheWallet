@@ -35,6 +35,7 @@ class CurrencyDetailsViewModel(
         when(event) {
             is CurrencyDetailsEvent.OnNameChange -> onChangeCurrencyName(event.newValue)
             is CurrencyDetailsEvent.OnSymbolChange -> onChangeCurrencySymbol(event.newValue)
+            is CurrencyDetailsEvent.OnDefaultCurrencyChange -> onChangeCurrencyDefault(event.newValue)
             is CurrencyDetailsEvent.OnCancel -> onCancel()
             is CurrencyDetailsEvent.OnSave -> TODO()
         }
@@ -65,6 +66,12 @@ class CurrencyDetailsViewModel(
         _state.value = _state.value.copy(
             currencySymbol = symbol,
             currencySymbolErrorMsg = errorMessage
+        )
+    }
+
+    private fun onChangeCurrencyDefault(newValue: Boolean) {
+        _state.value = _state.value.copy(
+            defaultCurrency = newValue
         )
     }
 

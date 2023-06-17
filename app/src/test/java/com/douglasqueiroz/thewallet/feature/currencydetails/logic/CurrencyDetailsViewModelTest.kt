@@ -158,6 +158,32 @@ class CurrencyDetailsViewModelTest {
     }
 
     @Test
+    fun `onEvent(OnDefaultCurrencyChange) - when turns it on then check the box`() = runBlocking {
+
+        val defaultCurrency = true
+
+        target.onEvent(CurrencyDetailsEvent.OnDefaultCurrencyChange(defaultCurrency))
+
+        target.state.test {
+            assertEquals(defaultCurrency, expectMostRecentItem().defaultCurrency)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `onEvent(OnDefaultCurrencyChange) - when turns it off then uncheck the box`() = runBlocking {
+
+        val defaultCurrency = false
+
+        target.onEvent(CurrencyDetailsEvent.OnDefaultCurrencyChange(defaultCurrency))
+
+        target.state.test {
+            assertEquals(defaultCurrency, expectMostRecentItem().defaultCurrency)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun `onEvent(OnCancel) - when onCancel then close the dialog`() {
 
         target.onEvent(CurrencyDetailsEvent.OnCancel)
