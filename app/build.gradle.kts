@@ -99,6 +99,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:${junitVersion}")
     testImplementation("org.slf4j:slf4j-api:2.0.7")
     testImplementation("com.github.tony19:logback-android:3.0.0")
+    testImplementation("app.cash.turbine:turbine:0.13.0")
 
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
