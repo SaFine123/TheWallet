@@ -6,4 +6,9 @@
     <string name="currency_list">Currency List</string>
     <string name="currencylist_screen_title">Currencies</string>
     <string name="settings_screen_title">Settings</string>
+    <string name="currency_details_name_label">Name</string>
+    <string name="currency_details_symbol_label">Symbol</string>
+    <string name="save">SAVE</string>
+    <string name="currency_details_title">Currency</string>
+    <string name="mandatory_field_error">This is a mandatory field</string>
 </resources>
