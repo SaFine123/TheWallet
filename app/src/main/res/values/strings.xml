@@ -11,4 +11,5 @@
     <string name="save">SAVE</string>
     <string name="currency_details_title">Currency</string>
     <string name="mandatory_field_error">This is a mandatory field</string>
+    <string name="currency_details_default_currency_label">Default Currency</string>
 </resources>

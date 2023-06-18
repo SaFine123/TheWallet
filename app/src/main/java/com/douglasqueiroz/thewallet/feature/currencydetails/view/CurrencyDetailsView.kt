@@ -12,7 +12,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -90,6 +92,20 @@ fun CurrencyDetailsView(
                         onEvent(CurrencyDetailsEvent.OnSymbolChange(it))
                     }
                 )
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = state.defaultCurrency,
+                        onCheckedChange = {
+                            onEvent(CurrencyDetailsEvent.OnDefaultCurrencyChange(it))
+                        }
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.currency_details_default_currency_label),
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
 
                 Button(
                     shape = RoundedCornerShape(50.dp),

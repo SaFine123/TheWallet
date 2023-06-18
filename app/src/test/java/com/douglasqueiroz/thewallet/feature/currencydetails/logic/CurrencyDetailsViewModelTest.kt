@@ -7,9 +7,15 @@ import com.douglasqueiroz.thewallet.data.local.model.Currency
 import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyDetailsEvent
 import com.douglasqueiroz.thewallet.util.StringResUtil
 import io.mockk.MockKAnnotations
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.verify
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,6 +23,9 @@ import org.junit.jupiter.api.Test
 class CurrencyDetailsViewModelTest {
 
     private var showDialog: Boolean = true
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val dispatcher = UnconfinedTestDispatcher()
 
     @MockK(relaxed = true)
     private lateinit var stringResUtil: StringResUtil
@@ -28,6 +37,7 @@ class CurrencyDetailsViewModelTest {
 
     @BeforeEach
     fun setUp() {
+        Dispatchers.setMain(dispatcher)
         MockKAnnotations.init(this)
         target = initTarget()
     }
@@ -231,5 +241,24 @@ class CurrencyDetailsViewModelTest {
         target.onEvent(CurrencyDetailsEvent.OnCancel)
 
         assertFalse(showDialog)
+    }
+
+    @Test
+    fun `onEvent(OnSave) - when currency was set then save currency with same id`() {
+
+        val currency = Currency(
+            id = 123,
+            name = "ABC",
+            symbol = "ABC",
+            defaultCurrency = false
+        )
+
+        target = initTarget(
+            currency
+        )
+
+        target.onEvent(CurrencyDetailsEvent.OnSave)
+
+        coVerify(exactly = 1) { currencyDao.upset(currency = currency) }
     }
 }
