@@ -34,7 +34,7 @@ fun NavGraphBuilder.currencyListScreen() {
             state = state,
             onNavigateUp = viewModel::navigateUp,
             onBottomBarClick = viewModel::onBottomBarClick,
-            addCurrency = viewModel::insert,
+            onEvent = viewModel::onEvent,
             currencyDetailsState = currencyDetailsState,
             currencyDetailsEvent = currencyDetailsViewModel::onEvent
         )

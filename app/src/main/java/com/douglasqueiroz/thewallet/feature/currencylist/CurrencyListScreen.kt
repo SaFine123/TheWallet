@@ -13,7 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.douglasqueiroz.thewallet.R
 import com.douglasqueiroz.thewallet.feature.currencydetails.logic.CurrencyDetailsViewState
 import com.douglasqueiroz.thewallet.feature.currencydetails.view.CurrencyDetailsView
-import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyDetailsEvent
+import com.douglasqueiroz.thewallet.feature.currencydetails.logic.CurrencyDetailsEvent
+import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyListEvent
 import com.douglasqueiroz.thewallet.feature.currencylist.state.CurrencyItemState
 import com.douglasqueiroz.thewallet.feature.currencylist.state.CurrencyListViewState
 import com.douglasqueiroz.thewallet.ui.components.TheWalletBottomBar
@@ -29,7 +30,7 @@ fun CurrencyListScreen(
     currencyDetailsEvent: (CurrencyDetailsEvent) -> Unit,
     onBottomBarClick: (BottomBarItem) -> Unit = {  },
     onNavigateUp: () -> Unit = {  },
-    addCurrency: () -> Unit = {}
+    onEvent: (CurrencyListEvent) -> Unit = {}
 ) {
     TheWalletTheme {
 
@@ -51,7 +52,7 @@ fun CurrencyListScreen(
                 TheWalletBottomBar(onBottomBarClick = onBottomBarClick)
             },
             floatingActionButton = {
-                FloatingActionButton(onClick = { addCurrency() }) {
+                FloatingActionButton(onClick = { onEvent(CurrencyListEvent.OnInsert) }) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "Add Currency"
@@ -61,7 +62,8 @@ fun CurrencyListScreen(
         ) {
             CurrencyList(
                 modifier = Modifier.padding(it),
-                currencyList = state.currencyList
+                currencyList = state.currencyList,
+                onEvent = onEvent
             )
         }
     }
@@ -74,16 +76,19 @@ fun CurrencyListScreenPreview() {
         state = CurrencyListViewState(
             currencyList = listOf(
                 CurrencyItemState(
+                    currencyId = 0,
                     currencyName = "Brazilian Real",
                     currencySymbol = "R$",
                     defaultCurrency = false
                 ),
                 CurrencyItemState(
+                    currencyId = 0,
                     currencyName = "US Dollar",
                     currencySymbol = "$",
                     defaultCurrency = true
                 ),
                 CurrencyItemState(
+                    currencyId = 0,
                     currencyName = "Euro",
                     currencySymbol = "€",
                     defaultCurrency = false

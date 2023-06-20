@@ -18,4 +18,10 @@ interface CurrencyDao {
 
     @Query("SELECT * FROM Currency")
     fun getAll(): Flow<List<Currency>>
+
+    @Query("SELECT * FROM Currency where id = :currencyId")
+    suspend fun getFromId(currencyId: Int): Currency?
+
+    @Query("UPDATE Currency SET defaultCurrency = 0")
+    suspend fun removeDefaultCurrencies()
 }

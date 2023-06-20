@@ -1,5 +1,6 @@
 package com.douglasqueiroz.thewallet.feature.currencylist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -19,12 +20,17 @@ fun CurrencyListItem(
     currencyName: String,
     currencySymbol: String,
     defaultCurrency: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: ()-> Unit
 ) {
 
     Row(
-        modifier = modifier.padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier = modifier
+            .padding(16.dp)
+            .clickable {
+                onClick()
+            },
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = "$currencyName ($currencySymbol)",
@@ -47,6 +53,7 @@ fun CurrencyListItemPreview() {
     CurrencyListItem(
         currencyName = "US Dollar",
         currencySymbol = "$",
-        defaultCurrency = true
+        defaultCurrency = true,
+        onClick = {}
     )
 }

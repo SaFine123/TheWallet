@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.douglasqueiroz.thewallet.R
 import com.douglasqueiroz.thewallet.data.local.dao.CurrencyDao
 import com.douglasqueiroz.thewallet.data.local.model.Currency
-import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyDetailsEvent
 import com.douglasqueiroz.thewallet.util.StringResUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,7 +30,8 @@ class CurrencyDetailsViewModel(
         _state.value = _state.value.copy(
             currencyName = currency.name,
             currencySymbol =  currency.symbol,
-            defaultCurrency = currency.defaultCurrency
+            defaultCurrency = currency.defaultCurrency,
+            enableSave = currency.name.isNotEmpty() && currency.symbol.isNotEmpty()
         )
     }
 
@@ -86,6 +86,11 @@ class CurrencyDetailsViewModel(
     }
 
     private fun onSave() = viewModelScope.launch {
+
+        if (_state.value.defaultCurrency) {
+            currencyDao.removeDefaultCurrencies()
+        }
+
         val currency = Currency(
             id = this@CurrencyDetailsViewModel.currency?.id ?: 0,
             name = _state.value.currencyName,

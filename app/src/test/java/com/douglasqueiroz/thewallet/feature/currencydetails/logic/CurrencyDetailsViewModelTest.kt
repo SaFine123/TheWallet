@@ -4,13 +4,11 @@ import app.cash.turbine.test
 import com.douglasqueiroz.thewallet.R
 import com.douglasqueiroz.thewallet.data.local.dao.CurrencyDao
 import com.douglasqueiroz.thewallet.data.local.model.Currency
-import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyDetailsEvent
 import com.douglasqueiroz.thewallet.util.StringResUtil
 import io.mockk.MockKAnnotations
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking

@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.douglasqueiroz.thewallet.R
 import com.douglasqueiroz.thewallet.feature.currencydetails.logic.CurrencyDetailsViewState
-import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyDetailsEvent
+import com.douglasqueiroz.thewallet.feature.currencydetails.logic.CurrencyDetailsEvent
 import com.douglasqueiroz.thewallet.ui.components.TheWalletTextField
 
 @Composable

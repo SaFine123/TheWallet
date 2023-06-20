@@ -1,4 +1,4 @@
-package com.douglasqueiroz.thewallet.feature.currencylist.logic
+package com.douglasqueiroz.thewallet.feature.currencydetails.logic
 
 sealed class CurrencyDetailsEvent {
     class OnNameChange(val newValue: String): CurrencyDetailsEvent()

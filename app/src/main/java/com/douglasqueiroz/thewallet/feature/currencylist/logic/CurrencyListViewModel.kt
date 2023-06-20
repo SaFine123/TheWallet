@@ -34,14 +34,23 @@ class CurrencyListViewModel(
         loadCurrencies()
     }
 
-    fun insert() = viewModelScope.launch {
+    fun onEvent(event: CurrencyListEvent) {
+        when (event) {
+            is CurrencyListEvent.OnInsert -> insert()
+            is CurrencyListEvent.OnSelectCurrency -> selectCurrency(event.currencyId)
+        }
+    }
+
+    private fun insert() = viewModelScope.launch {
         setCurrencyToDetailsDialog?.invoke(null)
         _stateFlow.value = _stateFlow.value.copy(
             showCurrencyDetailsDialog = true
         )
     }
 
-    fun edit(currency: Currency) {
+    private fun selectCurrency(currencyId: Int) = viewModelScope.launch {
+        val currency = currencyDao.getFromId(currencyId = currencyId) ?: return@launch
+
         setCurrencyToDetailsDialog?.invoke(currency)
         _stateFlow.value = _stateFlow.value.copy(
             showCurrencyDetailsDialog = true
@@ -58,6 +67,7 @@ class CurrencyListViewModel(
         currencyDao.getAll().map { currencyList ->
             val currencyItems = currencyList.map {
                 CurrencyItemState(
+                    currencyId = it.id,
                     currencyName = it.name,
                     currencySymbol = it.symbol,
                     defaultCurrency = it.defaultCurrency
