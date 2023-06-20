@@ -12,20 +12,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CurrencyDetailsViewModel(
-    private val currency: Currency? = null,
     private val stringResUtil: StringResUtil,
-    private val onShowDialog: (Boolean) -> Unit,
     private val currencyDao: CurrencyDao
 ): ViewModel() {
 
+    var onShowDialog: ((Boolean) -> Unit)? = null
+    var currency: Currency? = null
+        set(value) {
+            value?.let { populateCurrency(it) }
+
+            field = value
+        }
+
     private val _state = MutableStateFlow(CurrencyDetailsViewState())
     val state = _state.asStateFlow()
-
-    init {
-        currency?.let {
-            populateCurrency(currency)
-        }
-    }
 
     private fun populateCurrency(currency: Currency) {
         _state.value = _state.value.copy(
@@ -82,7 +82,7 @@ class CurrencyDetailsViewModel(
     }
 
     private fun onCancel() {
-        onShowDialog(false)
+        onShowDialog?.invoke(false)
     }
 
     private fun onSave() = viewModelScope.launch {
@@ -95,6 +95,6 @@ class CurrencyDetailsViewModel(
 
         currencyDao.upset(currency = currency)
 
-        onShowDialog(false)
+        onShowDialog?.invoke(false)
     }
 }

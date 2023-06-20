@@ -21,7 +21,8 @@ fun CurrencyList(
 
             CurrencyListItem(
                 currencyName = item.currencyName,
-                currencySymbol = item.currencySymbol
+                currencySymbol = item.currencySymbol,
+                defaultCurrency = item.defaultCurrency
             )
         }
     })
@@ -35,15 +36,18 @@ fun CurrencyListPreview() {
         currencyList = listOf(
             CurrencyItemState(
                 currencyName = "Brazilian Real",
-                currencySymbol = "R$"
+                currencySymbol = "R$",
+                defaultCurrency = false
             ),
             CurrencyItemState(
                 currencyName = "US Dollar",
-                currencySymbol = "$"
+                currencySymbol = "$",
+                defaultCurrency = true
             ),
             CurrencyItemState(
                 currencyName = "Euro",
-                currencySymbol = "€"
+                currencySymbol = "€",
+                defaultCurrency = false
             )
         )
     )

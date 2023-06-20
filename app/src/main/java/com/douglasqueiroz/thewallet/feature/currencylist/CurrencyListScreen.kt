@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.douglasqueiroz.thewallet.R
+import com.douglasqueiroz.thewallet.feature.currencydetails.logic.CurrencyDetailsViewState
+import com.douglasqueiroz.thewallet.feature.currencydetails.view.CurrencyDetailsView
+import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyDetailsEvent
 import com.douglasqueiroz.thewallet.feature.currencylist.state.CurrencyItemState
 import com.douglasqueiroz.thewallet.feature.currencylist.state.CurrencyListViewState
 import com.douglasqueiroz.thewallet.ui.components.TheWalletBottomBar
@@ -22,11 +25,21 @@ import com.douglasqueiroz.thewallet.ui.theme.TheWalletTheme
 @Composable
 fun CurrencyListScreen(
     state: CurrencyListViewState,
+    currencyDetailsState: CurrencyDetailsViewState,
+    currencyDetailsEvent: (CurrencyDetailsEvent) -> Unit,
     onBottomBarClick: (BottomBarItem) -> Unit = {  },
     onNavigateUp: () -> Unit = {  },
     addCurrency: () -> Unit = {}
 ) {
     TheWalletTheme {
+
+        if (state.showCurrencyDetailsDialog) {
+            CurrencyDetailsView(
+                state = currencyDetailsState,
+                onEvent = currencyDetailsEvent
+            )
+        }
+
         Scaffold(
             topBar = {
                 TheWalletTopBar(
@@ -62,17 +75,23 @@ fun CurrencyListScreenPreview() {
             currencyList = listOf(
                 CurrencyItemState(
                     currencyName = "Brazilian Real",
-                    currencySymbol = "R$"
+                    currencySymbol = "R$",
+                    defaultCurrency = false
                 ),
                 CurrencyItemState(
                     currencyName = "US Dollar",
-                    currencySymbol = "$"
+                    currencySymbol = "$",
+                    defaultCurrency = true
                 ),
                 CurrencyItemState(
                     currencyName = "Euro",
-                    currencySymbol = "€"
+                    currencySymbol = "€",
+                    defaultCurrency = false
                 )
-            )
-        )
+            ),
+            showCurrencyDetailsDialog = false
+        ),
+        currencyDetailsState = CurrencyDetailsViewState(),
+        currencyDetailsEvent = {}
     )
 }

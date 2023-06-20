@@ -24,6 +24,9 @@ class CurrencyListViewModel(
     OnBottomBarClick by OnBottomBarClickImpl(navRouter),
     OnTopBarClick by OnTopBarClickImp(navRouter)
 {
+
+    var setCurrencyToDetailsDialog: ((Currency?) -> Unit)? = null
+
     private val _stateFlow = MutableStateFlow(CurrencyListViewState())
     val stateFlow = _stateFlow.asStateFlow()
 
@@ -32,29 +35,36 @@ class CurrencyListViewModel(
     }
 
     fun insert() = viewModelScope.launch {
-        val currency = Currency(
-            name = "Currency A",
-            symbol = "AA",
-            defaultCurrency = false
+        setCurrencyToDetailsDialog?.invoke(null)
+        _stateFlow.value = _stateFlow.value.copy(
+            showCurrencyDetailsDialog = true
         )
-
-        currencyDao.upset(currency)
     }
 
-    fun loadCurrencies() = viewModelScope.launch {
+    fun edit(currency: Currency) {
+        setCurrencyToDetailsDialog?.invoke(currency)
+        _stateFlow.value = _stateFlow.value.copy(
+            showCurrencyDetailsDialog = true
+        )
+    }
+
+    fun closeCurrencyDetailsDialog() {
+        _stateFlow.value = _stateFlow.value.copy(
+            showCurrencyDetailsDialog = false
+        )
+    }
+
+    private fun loadCurrencies() = viewModelScope.launch {
         currencyDao.getAll().map { currencyList ->
             val currencyItems = currencyList.map {
                 CurrencyItemState(
                     currencyName = it.name,
-                    currencySymbol = it.symbol
+                    currencySymbol = it.symbol,
+                    defaultCurrency = it.defaultCurrency
                 )
             }
 
             _stateFlow.value = _stateFlow.value.copy(currencyList = currencyItems)
         }.stateIn(this)
     }
-
-
-
-
 }

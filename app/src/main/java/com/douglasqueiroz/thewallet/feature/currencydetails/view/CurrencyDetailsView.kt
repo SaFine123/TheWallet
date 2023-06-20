@@ -1,6 +1,5 @@
 package com.douglasqueiroz.thewallet.feature.currencydetails.view
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +13,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -64,15 +64,17 @@ fun CurrencyDetailsView(
                             fontWeight = FontWeight.Bold
                         )
                     )
-                    Icon(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "",
-                        tint = colorResource(android.R.color.darker_gray),
-                        modifier = Modifier
-                            .width(30.dp)
-                            .height(30.dp)
-                            .clickable { }
-                    )
+
+                    IconButton(onClick = { onEvent(CurrencyDetailsEvent.OnCancel) }) {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "",
+                            tint = colorResource(android.R.color.darker_gray),
+                            modifier = Modifier
+                                .width(30.dp)
+                                .height(30.dp)
+                        )
+                    }
                 }
 
                 TheWalletTextField(

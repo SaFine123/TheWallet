@@ -1,6 +1,7 @@
 package com.douglasqueiroz.thewallet.di
 
 import com.douglasqueiroz.thewallet.feature.assets.AssetsViewModel
+import com.douglasqueiroz.thewallet.feature.currencydetails.logic.CurrencyDetailsViewModel
 import com.douglasqueiroz.thewallet.feature.currencylist.logic.CurrencyListViewModel
 import com.douglasqueiroz.thewallet.feature.home.HomeViewModel
 import com.douglasqueiroz.thewallet.feature.settings.SettingsViewModel
@@ -26,6 +27,13 @@ object ViewModelModule {
 
         viewModel {
             CurrencyListViewModel(get(), get())
+        }
+
+        viewModel {
+            CurrencyDetailsViewModel(
+                stringResUtil = get(),
+                currencyDao = get()
+            )
         }
     }
 }
